@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>شاهد هذا الفيديو</title>
+  <title>أنقر هنا لمشاهدة الفيديو</title>
 
-  <!-- وسوم Open Graph لعرض معاينة في مسنجر -->
-  <meta property="og:title" content="شاهد هذا الفيديو">
-  <meta property="og:description" content="اضغط لمشاهدة">
-  <meta property="og:image" content="https://images.pexels.com/photos/15177012/pexels-photo-15177012.jpeg">
+  <!-- وسوم Open Graph لبطاقة المعاينة في مسنجر -->
+  <meta property="og:title" content="أنقر هنا لمشاهدة الفيديو">
+  <meta property="og:description" content="اضغط لبدء المشاهدة">
+  <!-- ضع هنا رابط الصورة التي عدلتها وفيها زر التشغيل -->
+  <meta property="og:image" content="https://example.com/mythumb-with-play.jpg">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://youcefcheria.github.io/Youcef/">
 
@@ -30,6 +31,16 @@
       background:#0a84ff;color:#fff;border:none;border-radius:8px;
       box-shadow:0 4px 12px rgba(0,0,0,.4);
     }
+    /* النص الشفاف */
+    #watermark{
+      position:absolute;top:12px;left:12px;
+      color:rgba(255,255,255,0.8);
+      font-size:22px;font-weight:bold;
+      background:rgba(0,0,0,0.3);
+      padding:6px 12px;border-radius:6px;
+      opacity:0;transition:opacity .5s;
+      pointer-events:none;
+    }
   </style>
 </head>
 <body>
@@ -39,23 +50,27 @@
       <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4" type="video/mp4">
       متصفحك لا يدعم فيديو HTML5
     </video>
-    <button id="startBtn">ابدأ</button>
+    <div id="watermark">أنقر هنا لمشاهدة الفيديو</div>
+    <button id="startBtn">أنقر هنا لمشاهدة الفيديو</button>
   </div>
 
   <script>
     const video   = document.getElementById('vid');
     const btn     = document.getElementById('startBtn');
+    const mark    = document.getElementById('watermark');
     const TARGET  = "https://youcefcheria.github.io/Youcef/";
 
     btn.addEventListener('click', async () => {
-      btn.disabled = true;        // منع نقرات أخرى
-      btn.style.display = "none"; // إخفاء الزر
-      try {
-        await video.play();       // تشغيل الفيديو
-      } catch(e) {
-        console.log("تعذر التشغيل:", e);
-      }
-      // بعد 12 ثانية من النقرة يتم الانتقال
+      btn.disabled = true;
+      btn.style.display = "none";
+
+      // إظهار النص الشفاف لمدة 3 ثوانٍ
+      mark.style.opacity = "1";
+      setTimeout(() => { mark.style.opacity = "0"; }, 3000);
+
+      try { await video.play(); } catch(e) { console.log("تعذر التشغيل:", e); }
+
+      // الانتقال بعد 12 ثانية
       setTimeout(() => { window.location.href = TARGET; }, 12000);
     });
   </script>
