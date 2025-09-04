@@ -1,66 +1,56 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
   <title>معاينة فيديو</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- وسوم Open Graph للفيسبوك -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="🎬 فيديو تجريبي">
+  <meta property="og:description" content="إضغط لتشاهد المحتوى">
+  <meta property="og:url" content="https://youcefcheria.github.io/Salma/">
+  <meta property="og:image" content="https://images.pexels.com/photos/921646/pexels-photo-921646.jpeg">
+
+  <!-- تويتر (للاحتياط) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="🎬 فيديو تجريبي">
+  <meta name="twitter:description" content="إضغط لتشاهد المحتوى">
+  <meta name="twitter:image" content="https://images.pexels.com/photos/921646/pexels-photo-921646.jpeg">
+
   <style>
-    html,body{height:100%;margin:0;background:#000;font-family:Arial, sans-serif}
-    .center{height:100%;display:grid;place-items:center;padding:20px}
-    .card{position:relative;width:95vw;max-width:980px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.6);background:#000}
-    video{width:100%;height:100%;object-fit:cover;display:block}
-
-    .overlay{
-      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-      background:rgba(0,0,0,0.45);
-      opacity:0;pointer-events:none;transition:opacity .25s ease;
+    body {
+      margin: 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    .overlay.visible{opacity:1;pointer-events:auto}
-
-    .big-icon{
-      width:120px;height:120px;border-radius:50%;display:grid;place-items:center;
-      background:rgba(255,255,255,.15);box-shadow:0 8px 30px rgba(0,0,0,.6);
-      cursor:pointer;user-select:none
+    .container {
+      position: relative;
+      cursor: pointer;
     }
-    .big-icon svg{width:56px;height:56px;fill:#fff}
+    .container img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 10px;
+    }
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 80px;
+      color: white;
+      opacity: 0.8;
+    }
   </style>
 </head>
 <body>
-  <div class="center">
-    <div class="card">
-      <!-- فيديو قصير وخفيف -->
-      <video id="preview"
-             playsinline
-             muted
-             autoplay
-             preload="auto"
-             src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4">
-        متصفحك لا يدعم تشغيل الفيديو.
-      </video>
-
-      <!-- أيقونة توقف/رابط -->
-      <a id="overlayLink" class="overlay" href="https://youcefcheria.github.io/Youcef/">
-        <div class="big-icon">
-          <svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"></path></svg>
-        </div>
-      </a>
-    </div>
+  <div class="container" onclick="window.location.href='https://youcefcheria.github.io/Salma/';">
+    <img src="https://images.pexels.com/photos/921646/pexels-photo-921646.jpeg" alt="Video Preview">
+    <div class="play-button">▶️</div>
   </div>
-
-  <script>
-    const video = document.getElementById('preview');
-    const overlay = document.getElementById('overlayLink');
-
-    function showOverlay(){
-      try{ video.pause(); }catch(e){}
-      overlay.classList.add('visible');
-    }
-
-    video.addEventListener('playing', ()=>{
-      setTimeout(showOverlay, 8000);
-    });
-
-    video.addEventListener('ended', showOverlay);
-  </script>
 </body>
 </html>
