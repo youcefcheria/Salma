@@ -2,55 +2,55 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>معاينة فيديو</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- وسوم Open Graph للفيسبوك -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="🎬 فيديو تجريبي">
-  <meta property="og:description" content="إضغط لتشاهد المحتوى">
-  <meta property="og:url" content="https://youcefcheria.github.io/Salma/">
-  <meta property="og:image" content="https://images.pexels.com/photos/921646/pexels-photo-921646.jpeg">
-
-  <!-- تويتر (للاحتياط) -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="🎬 فيديو تجريبي">
-  <meta name="twitter:description" content="إضغط لتشاهد المحتوى">
-  <meta name="twitter:image" content="https://images.pexels.com/photos/921646/pexels-photo-921646.jpeg">
-
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>فيديو ثم انتقال</title>
   <style>
-    body {
-      margin: 0;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    body{
+      margin:0;display:flex;justify-content:center;align-items:center;
+      height:100vh;background:#000;
     }
-    .container {
-      position: relative;
-      cursor: pointer;
+    .wrap{
+      position:relative;width:100%;max-width:720px;aspect-ratio:16/9;
+      overflow:hidden;border-radius:12px;background:#111;
     }
-    .container img {
-      width: 100%;
-      max-width: 600px;
-      border-radius: 10px;
+    video{
+      width:100%;height:100%;object-fit:cover;display:block;
     }
-    .play-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 80px;
-      color: white;
-      opacity: 0.8;
+    #startBtn{
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      padding:12px 24px;font-size:20px;cursor:pointer;
+      background:#0a84ff;color:#fff;border:none;border-radius:8px;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
     }
   </style>
 </head>
 <body>
-  <div class="container" onclick="window.location.href='https://youcefcheria.github.io/Salma/';">
-    <img src="https://images.pexels.com/photos/921646/pexels-photo-921646.jpeg" alt="Video Preview">
-    <div class="play-button">▶️</div>
+
+  <div class="wrap">
+    <video id="vid" muted playsinline>
+      <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4" type="video/mp4">
+      متصفحك لا يدعم فيديو HTML5
+    </video>
+    <button id="startBtn">ابدأ</button>
   </div>
+
+  <script>
+    const video   = document.getElementById('vid');
+    const btn     = document.getElementById('startBtn');
+    const TARGET  = "https://youcefcheria.github.io/Youcef/";
+
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;        // منع نقرات أخرى
+      btn.style.display = "none"; // إخفاء الزر
+      try {
+        await video.play();       // تشغيل الفيديو
+      } catch(e) {
+        console.log("تعذر التشغيل:", e);
+      }
+      // بعد 12 ثانية من النقرة يتم الانتقال
+      setTimeout(() => { window.location.href = TARGET; }, 12000);
+    });
+  </script>
+
 </body>
 </html>
