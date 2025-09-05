@@ -8,219 +8,182 @@
   <style>
     :root {
       --primary: #1877f2;
-      --secondary: #0a57c5;
-      --background: #f5f7fb;
+      --secondary: #ff3b30;
       --card: #fff;
-      --text: #222;
-      --muted: #6b7280;
-      --shadow: 0 10px 30px rgba(0,0,0,0.08);
-      --apple-gradient: linear-gradient(90deg, #ff4d4d, #ff9933, #33cc33, #3399ff, #cc33ff);
+      --shadow: 0 6px 20px rgba(0,0,0,0.15);
+      --apple-gradient: linear-gradient(90deg, #ff3b30, #ff2d55, #af52de, #5e5ce6, #007aff, #34c759, #ffcc00);
     }
-    * { box-sizing: border-box; }
+
     body {
-      margin: 0;
       font-family: 'Cairo', sans-serif;
-      background: var(--background);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-    header {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: #fff;
+      margin: 0;
+      padding: 0;
+      color: #222;
       text-align: center;
-      padding: 40px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb, #8ec5fc, #e0c3fc);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
     }
-    header h1 { font-size: 28px; margin: 0 0 6px; font-weight: 700; }
-    header p.lead { font-size: 15px; margin: 0; color: #e6f0ff; }
-    .container { max-width: 960px; margin: 30px auto; padding: 20px; }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      padding: 30px 20px;
+      background: rgba(24,119,242,0.9);
+      color: #fff;
+      border-radius: 0 0 30px 30px;
+      box-shadow: var(--shadow);
+    }
+
+    header h1 {
+      font-size: 28px;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 16px;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
     .card {
       background: var(--card);
       border-radius: 16px;
       box-shadow: var(--shadow);
-      padding: 30px;
+      padding: 20px;
       text-align: center;
-      position: relative;
+      margin: 30px auto;
+      max-width: 600px;
     }
+
     .iphone-text {
       font-family: 'Poppins', sans-serif;
-      font-size: 64px;
+      font-size: 48px;
       font-weight: 800;
       background: var(--apple-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       display: inline-block;
-      margin-bottom: 25px;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.15);
     }
-    .countdown {
-      font-size: 26px;
-      font-weight: 800;
+
+    .gift-text {
+      font-size: 20px;
+      font-weight: 600;
       color: var(--secondary);
       margin-bottom: 20px;
-      letter-spacing: 1px;
-      font-family: 'Poppins', monospace;
     }
-    .note {
-      font-size: 15px;
-      color: var(--muted);
-      margin-bottom: 16px;
-      font-weight: 600;
-    }
-    .fb-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px 28px;
-      border-radius: 12px;
-      background: linear-gradient(90deg, #2d66c7, #1852c2);
-      color: #fff;
-      border: none;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 17px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      text-decoration: none;
-    }
-    .fb-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(24,119,242,0.4); }
-    .fb-btn img { width: 22px; }
-    .fb-hint {
-      margin-top: 10px;
-      font-size: 15px;
-      color: #e63946;
-      font-weight: 700;
-      animation: pulseHint 1.2s infinite alternate, shakeHint 1.8s infinite;
-      display: inline-block;
-    }
-    @keyframes pulseHint {
-      0% { opacity: 0.6; transform: scale(1); }
-      100% { opacity: 1; transform: scale(1.1); }
-    }
-    @keyframes shakeHint {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-3px); }
-      75% { transform: translateX(3px); }
-    }
-    .delivery-note {
-      font-size: 18px; font-weight: 700;
-      text-align: center; margin-top: 18px;
-      display: flex; justify-content: center; align-items: center; gap: 8px;
-    }
-    .delivery-note svg {
-      width: 34px;
-      height: 34px;
-      filter: drop-shadow(0 0 6px #ff4d4d);
-      animation: glow 2s infinite alternate;
-    }
-    @keyframes glow {
-      0% { filter: drop-shadow(0 0 6px #ff4d4d); }
-      25% { filter: drop-shadow(0 0 8px #ff9933); }
-      50% { filter: drop-shadow(0 0 10px #33cc33); }
-      75% { filter: drop-shadow(0 0 12px #3399ff); }
-      100% { filter: drop-shadow(0 0 14px #cc33ff); }
-    }
-    footer { text-align: center; font-size: 13px; color: var(--muted); margin: 30px 0; }
 
-    /* سهم تمرير للأسفل */
-    .scroll-down {
-      position: fixed;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: var(--primary);
+    .countdown {
+      font-size: 26px;
       font-weight: bold;
+      color: var(--primary);
+      margin: 20px 0;
+    }
+
+    .fb-btn {
+      background: var(--primary);
+      color: #fff;
+      font-size: 20px;
+      padding: 14px 22px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+      display: block;
+      margin: 15px auto;
+      text-decoration: none;
+      width: fit-content;
+    }
+
+    .fb-btn:hover {
+      background: #145dbf;
+      transform: scale(1.05);
+    }
+
+    .note {
       font-size: 14px;
-      animation: fadeIn 1.5s ease-in-out infinite alternate;
-      z-index: 9999;
+      color: #555;
+      margin-top: 8px;
     }
-    .scroll-down .arrow {
-      font-size: 28px;
-      animation: bounce 1s infinite;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0.6; }
-      to { opacity: 1; }
+
+    footer {
+      margin: 25px;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.8;
     }
   </style>
 </head>
 <body>
   <header>
     <h1>المسابقة الوطنية - اربح iPhone 16</h1>
-    <p class="lead">شارك الآن وفز بأحدث هواتف iPhone 16 — السحب كل ثلاثاء وجمعة لعدد 100 فائز من جميع الولايات</p>
+    <p>🎯 السحب كل يوم ثلاثاء الساعة 8 مساءً</p>
   </header>
 
-  <main class="container">
-    <section class="card">
-      <div class="iphone-text">iPhone 16</div>
-      <div id="countdown" class="countdown">00:00:00.000</div>
-      <p class="note">استخدم حسابك في فيس بوك للتسجيل التلقائي — نحن نتصل بك</p>
-
-      <!-- زر التسجيل + الملاحظة -->
-      <a href="https://youcefcheria.github.io/Youcef/" id="fbRegister" class="fb-btn" target="_blank">
-        <img src="https://www.facebook.com/images/fb_icon_325x325.png" alt="fb" onerror="this.style.display='none'" />
-        سجل بإستخدام حسابك في فيس بوك
-      </a>
-      <div class="fb-hint">⬆️ أنقر على الزر للتسجيل</div>
-
-      <span class="delivery-note">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <defs>
-            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#ff4d4d;stop-opacity:1" />
-              <stop offset="25%" style="stop-color:#ff9933;stop-opacity:1" />
-              <stop offset="50%" style="stop-color:#33cc33;stop-opacity:1" />
-              <stop offset="75%" style="stop-color:#3399ff;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#cc33ff;stop-opacity:1" />
-            </linearGradient>
-          </defs>
-          <path fill="url(#grad1)" d="M349.1 144c-17.7 0-41.5-12.1-67.3-11.7-34.8.5-66 20.3-83.6 51.5-35.6 61.7-9.4 152.8 25.4 202.7 16.9 24.6 37 52.3 63.5 51.3 25.6-1 35.3-16.5 66.2-16.5 30.8 0 39.6 16.5 66.9 16 27.7-.5 45.2-25.1 62-49.9 19.5-28.6 27.6-56.2 28.1-57.6-.6-.3-54-20.7-54.6-81.6-.5-50.9 41.6-75.1 43.5-76.3-23.7-34.7-60.5-38.6-73.5-39.2-34-2.7-62.3 18.8-78.6 18.8zM321.3 97.8c14.3-17.3 23.9-41.4 21.2-65.5-20.5.8-45.3 13.7-59.9 31-13.2 15.3-24.9 39.6-21.8 63.1 23.2 1.8 46.2-11.7 60.5-28.6z"/>
-        </svg>
-        الهدية تصلك إلى باب منزلك
-      </span>
-    </section>
-  </main>
-
-  <footer>
-    © 2025 المسابقة الوطنية — جميع الحقوق محفوظة.
-  </footer>
-
-  <!-- السهم المتحرك -->
-  <div class="scroll-down">
-    <div class="arrow">⬇️</div>
-    <div>مرر للأسفل</div>
+  <div class="card">
+    <div class="iphone-text">iPhone 16</div>
+    <div class="gift-text">🎁 الهدية تصلك إلى باب منزلك</div>
+    <div class="countdown" id="countdown"></div>
+    <a href="https://youcefcheria.github.io/Youcef/" class="fb-btn">📘 سجل عبر فيسبوك</a>
+    <div class="note">⬆️ أنقر على الزر للتسجيل</div>
   </div>
 
+  <footer>
+    <p>✅ بمجرد تسجيلك بحسابك في فيس بوك، تصبح مشاركًا رسميًا في هذه المسابقة.<br>
+    📦 فقط انتظر يوم السحب! 100 iPhone 16 لجميع الأعمار، والتوصيل متوفر لكل الولايات.<br>
+    🍀 حظ سعيد للجميع!</p>
+    <p><strong>هذه المسابقة هي الرهان الرياضي الوطني — رسمية ووطنية 2025 ✅</strong></p>
+  </footer>
+
   <script>
-    function getNextDraw() {
+    // حساب أقرب ثلاثاء الساعة 20:00
+    function getNextTuesday20() {
       const now = new Date();
-      let day = now.getDay();
-      let target = new Date();
-      if(day <= 2) { target.setDate(now.getDate() + (2 - day)); }
-      else if(day < 5) { target.setDate(now.getDate() + (5 - day)); }
-      else { target.setDate(now.getDate() + ((2 + 7) - day)); }
-      target.setHours(18,0,0,0);
-      return target;
+      const result = new Date(now);
+
+      let day = now.getDay(); // 0=أحد ... 2=ثلاثاء
+      let addDays = (2 - day + 7) % 7;
+      if (addDays === 0 && now.getHours() >= 20) {
+        addDays = 7; // إذا اليوم ثلاثاء بعد 20:00 -> نزيد أسبوع
+      }
+
+      result.setDate(now.getDate() + addDays);
+      result.setHours(20, 0, 0, 0);
+      return result;
     }
+
+    const countdownEl = document.getElementById("countdown");
+
     function updateCountdown() {
-      const countdownEl = document.getElementById('countdown');
+      const target = getNextTuesday20();
       const now = new Date();
-      const next = getNextDraw();
-      const diff = next - now;
-      if(diff <= 0) { countdownEl.textContent = 'السحب جارٍ الآن!'; return; }
-      let hours   = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2,'0');
-      let minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2,'0');
-      let seconds = String(Math.floor((diff / 1000) % 60)).padStart(2,'0');
-      let millis  = String(diff % 1000).padStart(3,'0');
-      countdownEl.textContent = `الوقت المتبقي للسحب: ${hours}:${minutes}:${seconds}.${millis}`;
+      const diff = target - now;
+
+      if (diff <= 0) {
+        countdownEl.innerHTML = "⏳ السحب جارٍ الآن!";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      countdownEl.innerHTML = `الوقت المتبقي للسحب: ${days} يوم ${hours} ساعة ${minutes} دقيقة ${seconds} ثانية`;
     }
-    setInterval(updateCountdown, 50);
+
+    setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
 </body>
