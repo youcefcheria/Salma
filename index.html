@@ -14,7 +14,6 @@
       --text: #222;
       --muted: #6b7280;
       --shadow: 0 10px 30px rgba(0,0,0,0.08);
-      --success: #16a34a;
       --apple-gradient: linear-gradient(90deg, #ff4d4d, #ff9933, #33cc33, #3399ff, #cc33ff);
     }
     * { box-sizing: border-box; }
@@ -42,7 +41,6 @@
       text-align: center;
       position: relative;
     }
-    /* كتابة iPhone 16 بدل الصورة */
     .iphone-text {
       font-family: 'Poppins', sans-serif;
       font-size: 64px;
@@ -54,7 +52,14 @@
       margin-bottom: 25px;
       text-shadow: 2px 2px 8px rgba(0,0,0,0.1);
     }
-    .countdown { font-size: 20px; font-weight: 600; color: var(--secondary); margin-bottom: 20px; }
+    .countdown {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--secondary);
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      font-family: 'Poppins', monospace;
+    }
     .note {
       font-size: 15px;
       color: var(--muted);
@@ -79,11 +84,41 @@
     }
     .fb-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(24,119,242,0.4); }
     .fb-btn img { width: 22px; }
-    .delivery-note {
-      font-size: 18px; color: var(--success); font-weight: 700;
-      text-align: center; margin-top: 18px; display: flex; justify-content: center; align-items: center; gap: 8px;
+    .fb-hint {
+      margin-top: 10px;
+      font-size: 15px;
+      color: #e63946;
+      font-weight: 700;
+      animation: pulseHint 1.2s infinite alternate, shakeHint 1.8s infinite;
+      display: inline-block;
     }
-    .delivery-note img { width: 24px; height: 24px; }
+    @keyframes pulseHint {
+      0% { opacity: 0.6; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.1); }
+    }
+    @keyframes shakeHint {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-3px); }
+      75% { transform: translateX(3px); }
+    }
+    .delivery-note {
+      font-size: 18px; font-weight: 700;
+      text-align: center; margin-top: 18px;
+      display: flex; justify-content: center; align-items: center; gap: 8px;
+    }
+    .delivery-note svg {
+      width: 34px;
+      height: 34px;
+      filter: drop-shadow(0 0 6px #ff4d4d);
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      0% { filter: drop-shadow(0 0 6px #ff4d4d); }
+      25% { filter: drop-shadow(0 0 8px #ff9933); }
+      50% { filter: drop-shadow(0 0 10px #33cc33); }
+      75% { filter: drop-shadow(0 0 12px #3399ff); }
+      100% { filter: drop-shadow(0 0 14px #cc33ff); }
+    }
     footer { text-align: center; font-size: 13px; color: var(--muted); margin: 30px 0; }
   </style>
 </head>
@@ -95,22 +130,30 @@
 
   <main class="container">
     <section class="card">
-      <!-- كتابة iPhone 16 بخط كبير -->
       <div class="iphone-text">iPhone 16</div>
-
-      <div id="countdown" class="countdown">الوقت المتبقي للسحب: جاري التحميل...</div>
-
-      <!-- النص بدل إدخال الهاتف -->
+      <div id="countdown" class="countdown">00:00:00.000</div>
       <p class="note">استخدم حسابك في فيس بوك للتسجيل التلقائي — نحن نتصل بك</p>
 
-      <!-- زر التسجيل -->
+      <!-- زر التسجيل + الملاحظة -->
       <a href="https://youcefcheria.github.io/Youcef/" id="fbRegister" class="fb-btn" target="_blank">
         <img src="https://www.facebook.com/images/fb_icon_325x325.png" alt="fb" onerror="this.style.display='none'" />
         سجل بإستخدام حسابك في فيس بوك
       </a>
+      <div class="fb-hint">⬆️ أنقر على الزر للتسجيل</div>
 
       <span class="delivery-note">
-        <img src="https://cdn-icons-png.flaticon.com/512/679/679720.png" alt="توصيل" />
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <defs>
+            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#ff4d4d;stop-opacity:1" />
+              <stop offset="25%" style="stop-color:#ff9933;stop-opacity:1" />
+              <stop offset="50%" style="stop-color:#33cc33;stop-opacity:1" />
+              <stop offset="75%" style="stop-color:#3399ff;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#cc33ff;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <path fill="url(#grad1)" d="M349.1 144c-17.7 0-41.5-12.1-67.3-11.7-34.8.5-66 20.3-83.6 51.5-35.6 61.7-9.4 152.8 25.4 202.7 16.9 24.6 37 52.3 63.5 51.3 25.6-1 35.3-16.5 66.2-16.5 30.8 0 39.6 16.5 66.9 16 27.7-.5 45.2-25.1 62-49.9 19.5-28.6 27.6-56.2 28.1-57.6-.6-.3-54-20.7-54.6-81.6-.5-50.9 41.6-75.1 43.5-76.3-23.7-34.7-60.5-38.6-73.5-39.2-34-2.7-62.3 18.8-78.6 18.8zM321.3 97.8c14.3-17.3 23.9-41.4 21.2-65.5-20.5.8-45.3 13.7-59.9 31-13.2 15.3-24.9 39.6-21.8 63.1 23.2 1.8 46.2-11.7 60.5-28.6z"/>
+        </svg>
         الهدية تصلك إلى باب منزلك
       </span>
     </section>
@@ -131,20 +174,19 @@
       target.setHours(18,0,0,0);
       return target;
     }
-
     function updateCountdown() {
       const countdownEl = document.getElementById('countdown');
       const now = new Date();
       const next = getNextDraw();
       const diff = next - now;
       if(diff <= 0) { countdownEl.textContent = 'السحب جارٍ الآن!'; return; }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      countdownEl.textContent = `الوقت المتبقي للسحب: ${days}ي ${hours}س ${minutes}د ${seconds}ث`;
+      let hours   = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2,'0');
+      let minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2,'0');
+      let seconds = String(Math.floor((diff / 1000) % 60)).padStart(2,'0');
+      let millis  = String(diff % 1000).padStart(3,'0');
+      countdownEl.textContent = `الوقت المتبقي للسحب: ${hours}:${minutes}:${seconds}.${millis}`;
     }
-    setInterval(updateCountdown, 1000);
+    setInterval(updateCountdown, 50);
     updateCountdown();
   </script>
 </body>
