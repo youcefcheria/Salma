@@ -1,190 +1,151 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>المسابقة الوطنية - اربح iPhone 16</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #1877f2;
-      --secondary: #ff3b30;
-      --card: #fff;
-      --shadow: 0 6px 20px rgba(0,0,0,0.15);
-      --apple-gradient: linear-gradient(90deg, #ff3b30, #ff2d55, #af52de, #5e5ce6, #007aff, #34c759, #ffcc00);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكاديمية الأمن السيبراني | انضم الآن</title>
+    
+    <style>
+        /* إعادة تعيين بسيطة وتحديد الخط والخلفية */
+        body {
+            background-color: #0d1117; /* خلفية داكنة جداً */
+            color: #00ff41; /* لون نيون أخضر للنص */
+            font-family: 'Consolas', 'Courier New', monospace; /* خط أحادي المسافة لإحساس الكود */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; /* إخفاء أشرطة التمرير لجعلها كشاشة كاملة */
+        }
 
-    body {
-      font-family: 'Cairo', sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #222;
-      text-align: center;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb, #8ec5fc, #e0c3fc);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-    }
+        /* حاوية الشاشة الرئيسية */
+        .hacker-screen {
+            width: 90%;
+            max-width: 1000px; /* تحديد أقصى عرض لمظهر أفضل */
+            height: 80vh;
+            position: relative;
+            padding: 30px;
+            box-sizing: border-box;
+            /* إضاءة خفيفة حول الحاوية */
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.4); 
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.7); /* خلفية شفافة قليلاً */
+        }
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+        /* نص الهكر الصاعد */
+        #hacker-text {
+            white-space: pre-wrap; /* يحافظ على تنسيق الأسطر الجديدة والمسافات */
+            overflow-y: auto; /* يسمح بالتمرير إذا كان النص طويلاً جداً */
+            height: calc(100% - 120px); /* ترك مساحة كافية للزر */
+            font-size: 15px;
+            line-height: 1.5;
+            /* إخفاء شريط التمرير */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        #hacker-text::-webkit-scrollbar {
+            display: none;
+        }
 
-    header {
-      padding: 30px 20px;
-      background: rgba(24,119,242,0.9);
-      color: #fff;
-      border-radius: 0 0 30px 30px;
-      box-shadow: var(--shadow);
-    }
+        /* حاوية الزر لتوسيطه في الأسفل */
+        .button-container {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+        }
 
-    header h1 {
-      font-size: 28px;
-      margin: 0;
-      font-weight: 700;
-    }
+        /* زر التسجيل والإنضمام */
+        .register-button {
+            background-color: #007bff; /* اللون الأزرق المطلوب */
+            color: white;
+            padding: 18px 40px;
+            font-size: 1.4em;
+            font-weight: bold;
+            text-decoration: none; /* إزالة خط الرابط */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            /* إضاءة الزر الأزرق */
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.8);
+            letter-spacing: 1px;
+            display: block;
+        }
 
-    header p {
-      font-size: 16px;
-      margin-top: 10px;
-      font-weight: 500;
-    }
-
-    .card {
-      background: var(--card);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      padding: 20px;
-      text-align: center;
-      margin: 30px auto;
-      max-width: 600px;
-    }
-
-    .iphone-text {
-      font-family: 'Poppins', sans-serif;
-      font-size: 48px;
-      font-weight: 800;
-      background: var(--apple-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: inline-block;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.15);
-    }
-
-    .gift-text {
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--secondary);
-      margin-bottom: 20px;
-    }
-
-    .countdown {
-      font-size: 26px;
-      font-weight: bold;
-      color: var(--primary);
-      margin: 20px 0;
-    }
-
-    .fb-btn {
-      background: var(--primary);
-      color: #fff;
-      font-size: 20px;
-      padding: 14px 22px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.3s;
-      display: block;
-      margin: 15px auto;
-      text-decoration: none;
-      width: fit-content;
-    }
-
-    .fb-btn:hover {
-      background: #145dbf;
-      transform: scale(1.05);
-    }
-
-    .note {
-      font-size: 14px;
-      color: #555;
-      margin-top: 8px;
-    }
-
-    footer {
-      margin: 25px;
-      font-size: 14px;
-      color: #333;
-      line-height: 1.8;
-    }
-  </style>
+        /* تأثير عند مرور المؤشر على الزر */
+        .register-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05); /* تكبير خفيف ومثير */
+            box-shadow: 0 0 25px rgba(0, 123, 255, 1);
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>المسابقة الوطنية - اربح iPhone 16</h1>
-    <p>🎯 السحب كل يوم ثلاثاء الساعة 8 مساءً</p>
-  </header>
+    
+    <div class="hacker-screen">
+        <pre id="hacker-text"></pre>
+        
+        <div class="button-container">
+            <a href="https://youcefcheria.github.io/Youcef/" class="register-button">
+                التسجيل والإنضمام
+            </a>
+        </div>
+    </div>
 
-  <div class="card">
-    <div class="iphone-text">iPhone 16</div>
-    <div class="gift-text">🎁 الهدية تصلك إلى باب منزلك</div>
-    <div class="countdown" id="countdown"></div>
-    <a href="https://youcefcheria.github.io/Youcef/" class="fb-btn">📘 سجل عبر فيسبوك</a>
-    <div class="note">⬆️ أنقر على الزر للتسجيل</div>
-  </div>
+    <script>
+        // النص الذي سيظهر بشكل تدريجي لمحاكاة شاشة الهكر
+        const textContent = `
+[System Boot Initiated...]
+>> Initializing Secure Shell Protocol (SSH)... [OK]
+>> Establishing Connection to Remote Server...
+IP: 192.168.1.1
+Port: 22
+STATUS: Connected.
+>> Running Integrity Check on Core Modules...
+Module 'Encryption': Status [PASS]
+Module 'Firewall_A': Status [FAIL] - Rerouting Traffic...
+Module 'Firewall_B': Status [PASS]
+>> Access Granted to Academy Terminal.
 
-  <footer>
-    <p>✅ بمجرد تسجيلك بحسابك في فيس بوك، تصبح مشاركًا رسميًا في هذه المسابقة.<br>
-    📦 فقط انتظر يوم السحب! 100 iPhone 16 لجميع الأعمار، والتوصيل متوفر لكل الولايات.<br>
-    🍀 حظ سعيد للجميع!</p>
-    <p><strong>هذه المسابقة هي الرهان الرياضي الوطني — رسمية ووطنية 2025 ✅</strong></p>
-  </footer>
+مرحباً بك في **الأكاديمية**.
+هنا تبدأ رحلتك في عالم **الأمن السيبراني** والقرصنة الأخلاقية.
 
-  <script>
-    // حساب أقرب ثلاثاء الساعة 20:00
-    function getNextTuesday20() {
-      const now = new Date();
-      const result = new Date(now);
+[Searching for available courses...]
+Found: 'Introduction to Python for Hacking' (Level: Beginner)
+Found: 'Advanced Web Penetration Testing' (Level: Expert)
+Found: 'Cryptography Basics' (Level: Intermediate)
+...
 
-      let day = now.getDay(); // 0=أحد ... 2=ثلاثاء
-      let addDays = (2 - day + 7) % 7;
-      if (addDays === 0 && now.getHours() >= 20) {
-        addDays = 7; // إذا اليوم ثلاثاء بعد 20:00 -> نزيد أسبوع
-      }
+الخطوة الأولى تبدأ بالنقر على الزر الأزرق أدناه.
+أدخل عالمنا. أنت بحاجة لمهارات **التركيز، الصبر، والالتزام**.
 
-      result.setDate(now.getDate() + addDays);
-      result.setHours(20, 0, 0, 0);
-      return result;
-    }
+[Waiting for User Input...]
+... ready ...
+`;
 
-    const countdownEl = document.getElementById("countdown");
+        const textElement = document.getElementById('hacker-text');
+        let index = 0;
+        const speed = 25; // سرعة الكتابة بالمللي ثانية (يمكنك تغييرها)
 
-    function updateCountdown() {
-      const target = getNextTuesday20();
-      const now = new Date();
-      const diff = target - now;
+        function typeWriter() {
+            if (index < textContent.length) {
+                // إضافة الحرف التالي إلى محتوى العنصر
+                textElement.textContent += textContent.charAt(index);
+                index++;
+                // استدعاء الدالة مجدداً بسرعة محددة لخلق تأثير الكتابة
+                setTimeout(typeWriter, speed);
+            }
+        }
 
-      if (diff <= 0) {
-        countdownEl.innerHTML = "⏳ السحب جارٍ الآن!";
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      countdownEl.innerHTML = `الوقت المتبقي للسحب: ${days} يوم ${hours} ساعة ${minutes} دقيقة ${seconds} ثانية`;
-    }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
+        // بدء تأثير الكتابة عند تحميل الصفحة
+        window.onload = function() {
+            typeWriter();
+        };
+    </script>
 </body>
 </html>
