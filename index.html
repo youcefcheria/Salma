@@ -1,151 +1,213 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية الأمن السيبراني | انضم الآن</title>
-    
-    <style>
-        /* إعادة تعيين بسيطة وتحديد الخط والخلفية */
-        body {
-            background-color: #0d1117; /* خلفية داكنة جداً */
-            color: #00ff41; /* لون نيون أخضر للنص */
-            font-family: 'Consolas', 'Courier New', monospace; /* خط أحادي المسافة لإحساس الكود */
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden; /* إخفاء أشرطة التمرير لجعلها كشاشة كاملة */
-        }
+    <title>Cyber Academy — Join Now</title><style>
+    /* Basic reset + terminal aesthetic */
+    :root{
+        --bg:#06070a;
+        --neon-green:#00ff41;
+        --blue:#007bff;
+        --glass: rgba(0,0,0,0.55);
+    }
+    html,body{height:100%;}
+    body {
+        margin:0;
+        padding:0;
+        background: radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, var(--bg) 60%), #000;
+        color:var(--neon-green);
+        font-family: 'Consolas','Courier New',monospace;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        overflow:hidden;
+    }
 
-        /* حاوية الشاشة الرئيسية */
-        .hacker-screen {
-            width: 90%;
-            max-width: 1000px; /* تحديد أقصى عرض لمظهر أفضل */
-            height: 80vh;
-            position: relative;
-            padding: 30px;
-            box-sizing: border-box;
-            /* إضاءة خفيفة حول الحاوية */
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.4); 
-            border: 1px solid rgba(0, 255, 65, 0.2);
-            border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.7); /* خلفية شفافة قليلاً */
-        }
+    /* Main screen container */
+    .hacker-screen{
+        width:92%;
+        max-width:1000px;
+        height:84vh;
+        padding:28px;
+        box-sizing:border-box;
+        border-radius:6px;
+        background: linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.5));
+        border:1px solid rgba(0,255,65,0.12);
+        box-shadow: 0 0 30px rgba(0,255,65,0.06), inset 0 0 40px rgba(0,0,0,0.4);
+        position:relative;
+        overflow:hidden;
+    }
 
-        /* نص الهكر الصاعد */
-        #hacker-text {
-            white-space: pre-wrap; /* يحافظ على تنسيق الأسطر الجديدة والمسافات */
-            overflow-y: auto; /* يسمح بالتمرير إذا كان النص طويلاً جداً */
-            height: calc(100% - 120px); /* ترك مساحة كافية للزر */
-            font-size: 15px;
-            line-height: 1.5;
-            /* إخفاء شريط التمرير */
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        #hacker-text::-webkit-scrollbar {
-            display: none;
-        }
+    /* subtle scanline overlay for vibe */
+    .hacker-screen::before{
+        content:'';
+        position:absolute;
+        inset:0;
+        background-image:linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px);
+        background-size:100% 3px;
+        pointer-events:none;
+        mix-blend-mode:overlay;
+    }
 
-        /* حاوية الزر لتوسيطه في الأسفل */
-        .button-container {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: auto;
-        }
+    /* terminal text area */
+    #hacker-text{
+        height:calc(100% - 96px);
+        overflow:auto;
+        white-space:pre-wrap;
+        font-size:14px;
+        line-height:1.55;
+        padding-right:10px;
+        -ms-overflow-style:none;  /* IE and Edge */
+        scrollbar-width:none;  /* Firefox */
+    }
+    #hacker-text::-webkit-scrollbar{display:none}
 
-        /* زر التسجيل والإنضمام */
-        .register-button {
-            background-color: #007bff; /* اللون الأزرق المطلوب */
-            color: white;
-            padding: 18px 40px;
-            font-size: 1.4em;
-            font-weight: bold;
-            text-decoration: none; /* إزالة خط الرابط */
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-            /* إضاءة الزر الأزرق */
-            box-shadow: 0 0 15px rgba(0, 123, 255, 0.8);
-            letter-spacing: 1px;
-            display: block;
-        }
+    /* blinking cursor at the end */
+    .cursor{
+        display:inline-block;
+        width:10px;
+        background:var(--neon-green);
+        margin-left:6px;
+        animation:blink 1s steps(2,end) infinite;
+        vertical-align:text-bottom;
+        border-radius:2px;
+        height:1em;
+    }
+    @keyframes blink{50%{opacity:0}} 
 
-        /* تأثير عند مرور المؤشر على الزر */
-        .register-button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05); /* تكبير خفيف ومثير */
-            box-shadow: 0 0 25px rgba(0, 123, 255, 1);
-        }
-    </style>
+    /* button container centered at bottom */
+    .button-container{
+        position:absolute;
+        left:50%;
+        transform:translateX(-50%);
+        bottom:22px;
+        display:flex;
+        gap:12px;
+        align-items:center;
+    }
+
+    /* make the blue button intentionally small and neat */
+    .register-button{
+        background:var(--blue);
+        color:#fff;
+        padding:8px 16px; /* smaller */
+        font-size:0.95rem; /* smaller text */
+        font-weight:600;
+        border-radius:6px;
+        text-decoration:none;
+        box-shadow:0 6px 18px rgba(0,123,255,0.25), 0 0 10px rgba(0,123,255,0.12) inset;
+        transition:transform 0.18s, box-shadow 0.18s;
+        border:1px solid rgba(255,255,255,0.04);
+        display:inline-flex;
+        gap:10px;
+        align-items:center;
+    }
+    .register-button:hover{transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,123,255,0.35)}
+
+    /* secondary subtle ghost button */
+    .demo-button{
+        background:transparent;
+        color:var(--neon-green);
+        border:1px solid rgba(0,255,65,0.12);
+        padding:6px 12px;
+        font-size:0.85rem;
+        border-radius:6px;
+        text-decoration:none;
+    }
+
+    /* responsive tweaks */
+    @media (max-width:520px){
+        .hacker-screen{padding:18px}
+        .register-button{padding:6px 12px;font-size:0.9rem}
+    }
+
+</style>
+
 </head>
 <body>
-    
     <div class="hacker-screen">
-        <pre id="hacker-text"></pre>
-        
-        <div class="button-container">
-            <a href="https://youcefcheria.github.io/Youcef/" class="register-button">
-                التسجيل والإنضمام
-            </a>
-        </div>
+        <pre id="hacker-text" aria-live="polite"></pre><div class="button-container">
+        <a class="register-button" href="https://youcefcheria.github.io/Youcef/" target="_blank" rel="noopener noreferrer">
+            JOIN NOW
+        </a>
+        <a class="demo-button" href="#" id="demo">LIVE DEMO</a>
     </div>
+</div>
 
-    <script>
-        // النص الذي سيظهر بشكل تدريجي لمحاكاة شاشة الهكر
-        const textContent = `
-[System Boot Initiated...]
->> Initializing Secure Shell Protocol (SSH)... [OK]
->> Establishing Connection to Remote Server...
-IP: 192.168.1.1
-Port: 22
-STATUS: Connected.
->> Running Integrity Check on Core Modules...
-Module 'Encryption': Status [PASS]
-Module 'Firewall_A': Status [FAIL] - Rerouting Traffic...
-Module 'Firewall_B': Status [PASS]
->> Access Granted to Academy Terminal.
+<script>
+    // English 'hacker' terminal content — more dramatic and dynamic
+    const textContent = `
 
-مرحباً بك في **الأكاديمية**.
-هنا تبدأ رحلتك في عالم **الأمن السيبراني** والقرصنة الأخلاقية.
+[SYSTEM BOOT SEQUENCE INITIATED]
 
-[Searching for available courses...]
-Found: 'Introduction to Python for Hacking' (Level: Beginner)
-Found: 'Advanced Web Penetration Testing' (Level: Expert)
-Found: 'Cryptography Basics' (Level: Intermediate)
-...
+> Loading secure modules... [OK] Initializing adaptive firewall... [OK] Spawning encrypted console... [OK]
 
-الخطوة الأولى تبدأ بالنقر على الزر الأزرق أدناه.
-أدخل عالمنا. أنت بحاجة لمهارات **التركيز، الصبر، والالتزام**.
 
-[Waiting for User Input...]
-... ready ...
-`;
 
-        const textElement = document.getElementById('hacker-text');
-        let index = 0;
-        const speed = 25; // سرعة الكتابة بالمللي ثانية (يمكنك تغييرها)
+== ACCESS: ACADEMY TERMINAL == Welcome, Operator. You are entering the Cyber Academy — ethical hacking & advanced defense training.
 
-        function typeWriter() {
-            if (index < textContent.length) {
-                // إضافة الحرف التالي إلى محتوى العنصر
-                textElement.textContent += textContent.charAt(index);
-                index++;
-                // استدعاء الدالة مجدداً بسرعة محددة لخلق تأثير الكتابة
-                setTimeout(typeWriter, speed);
-            }
+[Probing available tracks...]
+
+"Intro to Python for Security"         (Level: Beginner)
+
+"Web Application Penetration"         (Level: Advanced)
+
+"Applied Cryptography"                (Level: Intermediate)
+
+"Network Exploitation & Forensics"    (Level: Expert)
+
+
+To proceed, press the small blue button below. This gateway unlocks tutorials, CTFs, and labs.
+
+[Note] This environment is simulated. Use your skills responsibly.
+
+> Terminal status: READY Listening for user input...`;
+
+
+
+const el = document.getElementById('hacker-text');
+    let i = 0;
+    const typingSpeed = 20; // ms per character
+
+    function typeWriter(){
+        if(i < textContent.length){
+            // reveal one char at a time
+            const ch = textContent.charAt(i);
+            el.textContent += ch;
+            i++;
+            // auto-scroll as text grows
+            el.scrollTop = el.scrollHeight;
+            setTimeout(typeWriter, typingSpeed + (ch === '\n' ? 45 : 0));
+        } else {
+            // append blinking cursor once done
+            const c = document.createElement('span');
+            c.className = 'cursor';
+            el.appendChild(c);
         }
+    }
 
-        // بدء تأثير الكتابة عند تحميل الصفحة
-        window.onload = function() {
-            typeWriter();
-        };
-    </script>
+    // subtle random 'glitch' flashes to excite the UI
+    function randomGlitch(){
+        const box = document.querySelector('.hacker-screen');
+        box.style.boxShadow = `0 0 ${8 + Math.random()*28}px rgba(0,255,65,${0.04 + Math.random()*0.12})`;
+        setTimeout(()=>{box.style.boxShadow = ''}, 120 + Math.random()*180);
+        setTimeout(randomGlitch, 2200 + Math.random()*3400);
+    }
+
+    window.addEventListener('load', ()=>{
+        typeWriter();
+        setTimeout(randomGlitch, 800);
+    });
+
+    // Demo button quick behavior (no harmful actions)
+    document.getElementById('demo').addEventListener('click', (e)=>{
+        e.preventDefault();
+        // append a short demo output
+        const demoText = `\n\n[DEMO] Running safe exploit simulation... [SIMULATION]\nResult: Sandbox environment stable. No systems harmed.\n`;
+        el.textContent += demoText;
+        el.scrollTop = el.scrollHeight;
+    });
+</script>
+
 </body>
 </html>
